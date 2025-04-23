@@ -6,7 +6,7 @@ import os
 #####################################################################################
 # Set the working directory to the folder which contains the AOIS subfolder
 # You must have shapefiles in the AOIS folder for all regions you list in the tile_list and tile_dictionary
-working_directory = r"C:\GIS\carbon_model\CarbonFlux_QA_v1.4.1"
+working_directory = r"C:\GIS\carbon_model\CarbonFlux_QA_v1.4.2"
 
 # Whether you want to overwrite previous arcpy outputs
 overwrite_arcgis_output = True
@@ -14,10 +14,10 @@ overwrite_arcgis_output = True
 # With each model update, change loss years and model_run_date
     # loss_years = number of years of tree cover loss (if input loss raster is changed, this must be changed, too)
     # model_run_date = s3 folder where per-pixel outputs from most recent model run are located
-loss_years = 23
+loss_years = 24
 
-removal_run_date = '20240308'
-emis_run_date = '20241230'
+removal_run_date = '20250416'
+emis_run_date = '20250416'
 
 # List of tile_ids to process (change according to which tiles overlap with your AOIS shapefiles)
 tile_list = ['00N_110E', '20N_020W']
@@ -33,7 +33,6 @@ extent = 'full'
 
 # Choose whether or not you want to get emissions by driver
 emissions_by_driver = True
-#todo: keep?
 
 # List of tree cover density thresholds to mask by
 tcd_threshold = [0, 30, 75]
@@ -122,10 +121,10 @@ mangrove_s3_pattern = 'mangrove_agb_t_ha_2000'
 plantation_s3_path = os.path.join(s3_base_dir, 'other_emissions_inputs/IDN_MYS_plantation_pre_2000/processed/20200724/')
 plantation_s3_pattern = 'plantation_2000_or_earlier_processed'
 
-# Annual Hansen loss tiles (2001-2023)
-loss_s3_path = 's3://gfw2-data/forest_change/hansen_2023/'
-loss_s3_pattern = 'GFW2023'
+# Annual Hansen loss tiles (2001-2024)
+loss_s3_path = 's3://gfw2-data/forest_change/hansen_2024/'
+loss_s3_pattern = 'GFW2024'
 
 # Drivers of tree cover loss (1km)
-drivers_s3_path = 's3://gfw2-data/drivers_of_loss/1_km/processed/20241224/'
-drivers_s3_pattern = 'drivers_of_TCL_1_km_20241224'
+drivers_s3_path = 's3://gfw2-data/drivers_of_loss/1_km/processed/20250414/'
+drivers_s3_pattern = 'drivers_of_TCL_1_km_20250414'
