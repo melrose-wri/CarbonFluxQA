@@ -17,7 +17,7 @@ overwrite_arcgis_output = True
 loss_years = 24
 
 removal_run_date = '20250416'
-emis_run_date = '20250416'
+emis_run_date = '20250430'
 
 # List of tile_ids to process (change according to which tiles overlap with your AOIS shapefiles)
 tile_list = ['00N_110E', '20N_020W']

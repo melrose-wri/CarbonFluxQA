@@ -147,7 +147,7 @@ def zonal_stats_clean():
     masked_output.loc[masked_output["Value"] == 1, "Value"] = "Permanent_Agriculture"
     masked_output.loc[masked_output["Value"] == 2, "Value"] = "Hard_Commodities"
     masked_output.loc[masked_output["Value"] == 3, "Value"] = "Shifting_Cultivation"
-    masked_output.loc[masked_output["Value"] == 4, "Value"] = "Forest_Management"
+    masked_output.loc[masked_output["Value"] == 4, "Value"] = "Logging"
     masked_output.loc[masked_output["Value"] == 5, "Value"] = "Wildfire"
     masked_output.loc[masked_output["Value"] == 6, "Value"] = "Settlements_Infrastructure"
     masked_output.loc[masked_output["Value"] == 7, "Value"] = "Other_Natural_Disturbances"
