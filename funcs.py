@@ -174,13 +174,13 @@ def zonal_stats_clean():
     masked_output.reset_index(inplace=True)
 
     # Make sure drivers emission sums match
-    columns_to_sum = ["No_Driver", "Permanent_Agriculture", "Hard_Commodities", "Shifting_Cultivation", "Forest_Management", "Wildfire", "Settlements_Infrastructure", "Other_Natural_Disturbances"]
+    columns_to_sum = ["No_Driver", "Permanent_Agriculture", "Hard_Commodities", "Shifting_Cultivation", "Logging", "Wildfire", "Settlements_Infrastructure", "Other_Natural_Disturbances"]
     masked_output["Drivers_Sum"] = masked_output[columns_to_sum].sum(axis=1, min_count=1)
     masked_output["DriversQC"] = masked_output["Sum"].round() == masked_output["Drivers_Sum"].round()
 
     # Reorder columns
     order = ["File", "Sum", "Type", "Extent", "Density", "Mask", "Permanent_Agriculture", "Hard_Commodities",
-             "Shifting_Cultivation", "Forest_Management", "Wildfire", "Settlements_Infrastructure",
+             "Shifting_Cultivation", "Logging", "Wildfire", "Settlements_Infrastructure",
              "Other_Natural_Disturbances", "No_Driver", "Drivers_Sum", "DriversQC"]
     masked_output = masked_output[order]
 
