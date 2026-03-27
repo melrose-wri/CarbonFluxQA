@@ -9,17 +9,15 @@ import os
 working_directory = r"C:\GIS\carbon_model\CarbonFlux_QA_v1.4.3"
 
 # Whether you want to overwrite previous arcpy outputs
-overwrite_arcpy_output = False
+overwrite_arcpy_output = True
 
 # With each model update, change loss years and model_run_date
     # loss_years = number of years of tree cover loss (if input loss raster is changed, this must be changed, too)
     # model_run_date = s3 folder where per-pixel outputs from most recent model run are located
-loss_years = 24
-#TODO: Update to 25
+loss_years = 25
 
-removal_run_date = '20250416'
-emis_run_date = '20250430'
-#TODO: Update with v1.4.3 output dates
+removal_run_date = '20260302'
+emis_run_date = '20260327'
 
 # List of tile_ids to process (change according to which tiles overlap with your AOIS shapefiles)
 tile_list = ['00N_110E', '20N_020W', '40N_010W']
@@ -131,12 +129,9 @@ loss_s3_path = f's3://gfw2-data/forest_change/hansen_20{loss_years}/'
 loss_s3_pattern = f'GFW20{loss_years}'
 
 # Drivers of tree cover loss (1km)
-drivers_s3_path = 's3://gfw2-data/drivers_of_loss/1_km/processed/20250414/'
-drivers_s3_pattern = 'drivers_of_TCL_1_km_20250414'
-#TODO: update with 2025 drivers
+drivers_s3_path = 's3://gfw2-data/drivers_of_loss/1_km/processed/20260326/'
+drivers_s3_pattern = 'drivers_of_TCL_1_km_20260326'
 
 # TCLF
-tclf_s3_path = 's3://gfw2-data/climate/carbon_model/other_emissions_inputs/tree_cover_loss_fires/20250403/processed/'
-#tclf_s3_path = 's3://gfw2-data/climate/carbon_model/other_emissions_inputs/tree_cover_loss_fires/20260317/processed/'
+tclf_s3_path = 's3://gfw2-data/climate/carbon_model/other_emissions_inputs/tree_cover_loss_fires/20260317/processed/'
 tclf_s3_pattern = 'tree_cover_loss_fire_processed'
-#TODO: update with 2025 TCLF
