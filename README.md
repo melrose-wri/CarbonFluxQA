@@ -1,7 +1,7 @@
 ### Purpose
 
     The purpose of this tool is to automate the zonal statistics portion of the QAQC process for the
-    annual Carbon Flux Model (Harris, 2021) Update. Each year, the Carbon Flux Model is run with updated activity data
+    annual Forest Flux Model (Harris, 2021) Update. Each year, the Forest Flux Model is run with updated activity data
     for tree cover loss (Hansen, 2013) and auxiliary inputs. Before the data is launched on Global Forest Watch, the
     outputs are compared across platforms and methods including the GeoTrellis Tool, GFW Dashboard download spreadsheets,
     the GFW API, and ArcPy zonal statistics calculations. 
@@ -19,10 +19,10 @@
     located in a subfolder in the woking directory named "AOIS".
 
     This tool is set up to run statistics for as many areas of interest as the user provides. We use administrative 
-    boundaries for Indonesia and Gambia from the GADM 4.1 Dataset, available for download here:
+    boundaries for Indonesia, Gambia, and Morocco from the GADM 4.1 Dataset, available for download here:
     [](https://gadm.org/download_country.html).
 
-    The Indonesia admin 2 boundary is IND.14.13 and the Gambia iso boundary is GMB. 
+    The Gambia iso boundary is GMB, the Morocco admin 1 boundary is MAR.14, and the Indonesia admin 2 boundary is IND.14.13. 
 
     These inputs will need to be updated if and when GFW switches to a newer version of GADM. 
  
@@ -40,7 +40,7 @@
 | Argument               | Description                                                                  | Type       |
 |------------------------|------------------------------------------------------------------------------|------------|
 | working_directory      | Directory which contains the AOIS subfolder.                                 | String     |
-| overwrite_arcpy_output | Whether or not you want to overwrite any previous arcpy outputs.             | Boolean    |
+| overwrite_arcpy_output | Whether or not you want to overwrite any previous ArcPy outputs.             | Boolean    |
 | loss_years             | Number of years of tree cover loss in the TCL dataset.                       | Integer    |
 | model_run_date         | s3 folder where per-pixel outputs from most recent model run are located.    | String     |
 | tile_list              | List of 10 x 10 degree tiles that overlap with all aoi(s).                   | List       |
@@ -78,16 +78,16 @@
 
     Other auxiliary inputs for this tool include:
 
-| Dataset                           | Use Description                                                                           |
-|-----------------------------------|-------------------------------------------------------------------------------------------|
-| Tree Cover Gain                   | Used to create tree cover gain mask.                                                      |
-| Above Ground Biomass              | Used to filter tree cover gain mask to only pixels that contain biomass.                  |
-| Tree Cover Density                | Used to create density threshold masks (i.e. 0, 30, 75).                                  |
-| Mangrove Extent                   | Used to create mangrove mask.                          |
+| Dataset                           | Use Description                                                                              |
+|-----------------------------------|----------------------------------------------------------------------------------------------|
+| Tree Cover Gain                   | Used to create tree cover gain mask.                                                         |
+| Above Ground Biomass              | Used to filter tree cover gain mask to only pixels that contain biomass.                     |
+| Tree Cover Density                | Used to create density threshold masks (i.e. 0, 30, 75).                                     |
+| Mangrove Extent                   | Used to create mangrove mask.                                                                |
 | Pre-2000 Plantations              | Used to create pre-2000 plantations mask. Pre-2000 plantations masked out from calculations. |
-| Tree Cover Loss (TCL)             | Used to calculate annual emissions.                                                       |
-| Driver of TCL                     | Used to calculate emissions by driver.                                                    |
-| Tree Cover Loss from Fires (TCLF) | Used to calculate annual emissions from fires.                                            |
+| Tree Cover Loss (TCL)             | Used to calculate annual emissions.                                                          |
+| Driver of TCL                     | Used to calculate emissions by driver.                                                       |
+| Tree Cover Loss from Fires (TCLF) | Used to calculate annual emissions from fires.                                               |
 
 ### Outputs:
 
@@ -110,31 +110,35 @@
 #### components
 
     This folder houses individual scripts for running separate functions. These can be useful for running particular 
-    functions separately and testing edits/ troubleshootins. Each function is described below. 
+    functions separately and testing edits/ troubleshooting. Each function is described below. 
 
 ##### 01 Download Files
     This script creates the folder structure (other than the AOI folder) and downloads all of the required datasets from 
     s3 using the paths provided in the the constant_and_names file. You will need to set your AWS_ACCESS_KEY and 
     AWS_SECRET_ACCESS_KEY in your environment variables for this step to work (assuming you have s3 copy permissions).
 
-##### 02 Create Masks
+##### 02 Create TCD Masks
     This script uses data on tree cover density, tree cover gain, mangrove extent, WHRC biomass, and pre-2000 plantations
     to replicate the masks that are used in GFW data processing. This facilitates direct comparison with results from the GFW 
-    Dashboard, GeoTrellis client, and GFW API. The script creates masks based on criteria for each input dataset and saves these
-    masks in a sub directory. These masks are used later as extent inputs in the Zonal Statistics Masked script.
+    Dashboard, GeoTrellis client, and GFW API. The script creates masks based on criteria for each input dataset and saves 
+    these masks in a sub directory. These masks are used later as extent inputs in the Zonal Statistics Masked script.
 
-##### 03 Zonal Stats Masked
+##### 03 Zonal Stats Drivers
     This script calculates zonal statistics for each area of interest and carbon dataset combination and applies each  
     mask saved in the Mask/ Mask directory. The number of masks depend on the number of tcd_threshold values you indicated 
     and wheter or not you set the save_intermediate flag to True. At minimum, this will include final masks for each 
     tcd_threshold value and at maximum this will be the number of tcd_threshold values multiplied by the number of 
     intermediate masks (this varies depending on whether or not the area of interest includes mangroves and/ or 
-    pre-2000 plantations). 
+    pre-2000 plantations). The result is gross emissions, removals, and net flux for the entire time period further
+    disaggregated into gross flux by driver of Tree Cover Loss. 
 
-##### 04 Zonal Stats Annualized
-    This script calculates annual emissions in each area of interest using the tree cover loss dataset. 
+##### 04 Zonal Stats Annual
+    This script calculates annual emissions in each area of interest using the year of tree cover loss dataset. 
 
-##### 05 Zonal Stats Cleaned
+##### 05 Zonal Stats Fire
+    This script calculates annual emissions from fires in each area of interest using the tree cover loss from fires dataset. 
+
+##### 06 Zonal Stats Cleaned
     This script utilizes pandas to compile the results of all analyses and export them into a user-friendly csv file.
 
 ### Running the Code
@@ -145,11 +149,6 @@
     This code is built on ArcPy, which will require a valid ArcGIS license to run.
 
 ### Other Notes
-    Updates in progress include...
-    
-    - Currently, the annual zonal stats do not sum to the total emissions using the TCL dataset from s3, 
-    but they do when using the previous TCL clipped rasters. For now, reach out to Melissa Rose for 
-    the previous TCL clipped rasters. 
 
 #### Contact Info
     Melissa Rose - melissa.rose@wri.org

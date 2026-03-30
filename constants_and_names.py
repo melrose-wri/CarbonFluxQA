@@ -16,8 +16,7 @@ overwrite_arcpy_output = True
     # model_run_date = s3 folder where per-pixel outputs from most recent model run are located
 loss_years = 25
 
-removal_run_date = '20260302'
-emis_run_date = '20260327'
+model_run_date = '20260327'  # This is for per-pixel outputs so should be when full run through for removals is complete
 
 # List of tile_ids to process (change according to which tiles overlap with your AOIS shapefiles)
 tile_list = ['00N_110E', '20N_020W', '40N_010W']
@@ -79,27 +78,27 @@ s3_base_dir = 's3://gfw2-data/climate/carbon_model/'
 
 ## Input folder s3 filepath informaiton
 # Gross emissions per pixel in forest extent
-gross_emis_forest_extent_s3_path = os.path.join(s3_base_dir, f'gross_emissions/all_drivers/all_gases/biomass_soil/standard/forest_extent/per_pixel/{emis_run_date}/')
+gross_emis_forest_extent_s3_path = os.path.join(s3_base_dir, f'gross_emissions/all_drivers/all_gases/biomass_soil/standard/forest_extent/per_pixel/{model_run_date}/')
 gross_emis_forest_extent_s3_pattern = f'gross_emis_all_gases_all_drivers_Mg_CO2e_pixel_biomass_soil_forest_extent_2001_{loss_years}'
 
 # Gross emissions per pixel in all pixels
-gross_emis_full_extent_s3_path = os.path.join(s3_base_dir, f'gross_emissions/all_drivers/all_gases/biomass_soil/standard/full_extent/per_pixel/{emis_run_date}/')
+gross_emis_full_extent_s3_path = os.path.join(s3_base_dir, f'gross_emissions/all_drivers/all_gases/biomass_soil/standard/full_extent/per_pixel/{model_run_date}/')
 gross_emis_full_extent_s3_pattern = f'gross_emis_all_gases_all_drivers_Mg_CO2e_pixel_biomass_soil_full_extent_2001_{loss_years}'
 
 # Gross removals per pixel in forest extent
-gross_removals_forest_extent_s3_path = os.path.join(s3_base_dir, f'gross_removals_AGCO2_BGCO2_all_forest_types/standard/forest_extent/per_pixel/{removal_run_date}/')
+gross_removals_forest_extent_s3_path = os.path.join(s3_base_dir, f'gross_removals_AGCO2_BGCO2_all_forest_types/standard/forest_extent/per_pixel/{model_run_date}/')
 gross_removals_forest_extent_s3_pattern = f'gross_removals_AGCO2_BGCO2_Mg_pixel_all_forest_types_forest_extent_2001_{loss_years}'
 
 # Gross removals per pixel in all pixels
-gross_removals_full_extent_s3_path = os.path.join(s3_base_dir, f'gross_removals_AGCO2_BGCO2_all_forest_types/standard/full_extent/per_pixel/{removal_run_date}/')
+gross_removals_full_extent_s3_path = os.path.join(s3_base_dir, f'gross_removals_AGCO2_BGCO2_all_forest_types/standard/full_extent/per_pixel/{model_run_date}/')
 gross_removals_full_extent_s3_pattern = f'gross_removals_AGCO2_BGCO2_Mg_pixel_all_forest_types_full_extent_2001_{loss_years}'
 
 # Net flux per pixel in forest extent
-netflux_forest_extent_s3_path = os.path.join(s3_base_dir, f'net_flux_all_forest_types_all_drivers/biomass_soil/standard/forest_extent/per_pixel/{emis_run_date}/')
+netflux_forest_extent_s3_path = os.path.join(s3_base_dir, f'net_flux_all_forest_types_all_drivers/biomass_soil/standard/forest_extent/per_pixel/{model_run_date}/')
 netflux_forest_extent_s3_pattern = f'net_flux_Mg_CO2e_pixel_biomass_soil_forest_extent_2001_{loss_years}'
 
 # Net flux per pixel in all pixels
-netflux_full_extent_s3_path = os.path.join(s3_base_dir, f'net_flux_all_forest_types_all_drivers/biomass_soil/standard/full_extent/per_pixel/{emis_run_date}/')
+netflux_full_extent_s3_path = os.path.join(s3_base_dir, f'net_flux_all_forest_types_all_drivers/biomass_soil/standard/full_extent/per_pixel/{model_run_date}/')
 netflux_full_extent_s3_pattern = f'net_flux_Mg_CO2e_pixel_biomass_soil_full_extent_2001_{loss_years}'
 
 ## Mask, Inputs folder s3 filepath informaiton
