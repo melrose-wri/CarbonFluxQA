@@ -72,6 +72,12 @@
 | GMB | Full   | Gross Emissions | Mg CO2e/pixel | 20N_020W |
 | GMB | Full   | Gross Removals  | Mg CO2/pixel  | 20N_020W |
 | GMB | Full   | Net Flux        | Mg CO2e/pixel | 20N_020W |
+| MAR | Forest | Gross Emissions | Mg CO2/pixel  | 40N_010W |
+| MAR | Forest | Gross Removals  | Mg CO2e/pixel | 40N_010W |
+| MAR | Forest | Net Flux        | Mg CO2/pixel  | 40N_010W |
+| MAR | Full   | Gross Emissions | Mg CO2e/pixel | 40N_010W |
+| MAR | Full   | Gross Removals  | Mg CO2/pixel  | 40N_010W |
+| MAR | Full   | Net Flux        | Mg CO2e/pixel | 40N_010W |
 
 
 #### Auxiliary Datasets:
